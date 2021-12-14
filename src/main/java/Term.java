@@ -5,6 +5,10 @@ public class Term {
     private TermType termType;
     private ArrayList<Term> arguments;
 
+    public Term() {
+
+    }
+
     public Term(String termName, TermType termType) {
         this.termName = termName;
         this.termType = termType;
