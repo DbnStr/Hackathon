@@ -10,8 +10,28 @@ public class Term {
         this.termType = termType;
     }
 
-    public void setArguments(ArrayList<Term> terms) {
-        this.arguments = terms;
+    public String getTermName() {
+        return termName;
+    }
+
+    public TermType getTermType() {
+        return termType;
+    }
+
+    public ArrayList<Term> getArguments() {
+        return arguments;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
+    }
+
+    public void setTermType(TermType termType) {
+        this.termType = termType;
+    }
+
+    public void setArguments(ArrayList<Term> arguments) {
+        this.arguments = arguments;
     }
 
     enum TermType {

@@ -4,10 +4,13 @@ public class Parser {
 
     private static final String VARIABLE_REGEX = "\\[[[a-z],]*[a-z]\\]";
     public static TRS parse(ArrayList<String> rules) throws SyntaxError {
-
-        for(String rule : rules) {
-
+        ArrayList<Term> variables = parseVariables(rules.get(0));
+        for (Term variable : variables) {
+            System.out.println(variable.);
         }
+        System.out.println(variables);
+
+        return new TRS();
     }
 
     public static ArrayList<Term> parseVariables(String variables) throws SyntaxError{
