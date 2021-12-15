@@ -20,7 +20,7 @@ public class HackathonApp {
             }
         };
         Timer timer = new Timer();
-        timer.schedule(timerTask, 100, 1000);
+        timer.schedule(timerTask, 3 * 60 * 1000, 1000);
         try {
             ArrayList<String> input = FileReaderHelper.readFile(TEST_FILE_NAME);
             input = FileReaderHelper.deleteAllSpaces(input);
