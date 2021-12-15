@@ -17,6 +17,7 @@ public class HackathonApp {
             input = FileReaderHelper.deleteAllSpaces(input);
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
+//            trs.showTRS();
             checkTerms(trs);
             boolean isTerminating = LPO.checkTerminating(trs);
 
