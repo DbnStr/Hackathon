@@ -9,9 +9,6 @@ fAdEx (EEE) -> f(x, PosdQDdscxsxs)
 a(x) -> b(f(x))
 b(x) -> c(x) 
 c(d(x)) -> d(d(a(x)))
-[x]
-a(p(b(c(x)))) -> c(a(q(d(b(a(p(b(a(p(x))))))))))
-p(a(q(d(x)))) -> d(a(q(d(b(a(p(b(a(p(x))))))))))
 
 Тест 3:
 [C, i, z]
