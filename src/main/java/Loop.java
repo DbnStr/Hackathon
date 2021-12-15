@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Loop {
-    public static boolean isLoop(TRS trs) {
+    public static boolean isLoop(TRS trs) throws StackOverflowError {
         ArrayList<Rule> allRules = trs.getRules();
         for (Rule r : allRules) {
             ArrayList<String> checked = new ArrayList<>();
@@ -12,7 +12,7 @@ public class Loop {
         return false;
     }
 
-    private static boolean isUnified(Rule r, TRS trs, ArrayList<String> checked) {
+    private static boolean isUnified(Rule r, TRS trs, ArrayList<String> checked) throws StackOverflowError {
         checked.add(r.getLefTerm() + "-" + r.getRightTerm());
         boolean res = false;
         ArrayList<Rule> allRules = trs.getRules();

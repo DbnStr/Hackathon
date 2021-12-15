@@ -20,11 +20,18 @@ public class HackathonApp {
             TRS trs = parser.parse();
             checkTerms(trs);
             boolean isTerminating = LPO.checkTerminating(trs);
-            boolean isLoop = Loop.isLoop(trs);
+            boolean isLoop = false;
+            try {
+                isLoop = Loop.isLoop(trs);
+            } catch (StackOverflowError e) {
+                writeResult(UNKNOWN_MESSAGE);
+            }
             if (isLoop) {
+                System.out.println("FALSE");
                 writeResult(FALSE_MESSAGE);
             } else {
                 if (isTerminating) {
+                    System.out.println("TRUE");
                     writeResult(TRUE_MESSAGE);
                 } else {
                     writeResult(UNKNOWN_MESSAGE);
