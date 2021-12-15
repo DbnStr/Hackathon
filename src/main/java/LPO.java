@@ -36,7 +36,8 @@ public class LPO {
 
     public static ArrayList<ArrayList<String>> checkThird(Term leftTerm, Term rightTerm, ArrayList<ArrayList<String>> assumptions) {
         ArrayList<ArrayList<String>> deletedAssumptions = new ArrayList<>();
-        for (ArrayList<String> assumption : assumptions) {
+        for (int i = 0; i < assumptions.size(); i++) {
+            ArrayList<String> assumption = assumptions.get(i);
             if (assumption.indexOf(leftTerm.getTermName()) > assumption.indexOf(rightTerm.getTermName())) {
                 for (Term arg: rightTerm.getArguments()) {
                     assumptions = leftMoreThanRight(leftTerm, arg, assumptions);
