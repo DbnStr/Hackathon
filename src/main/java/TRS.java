@@ -68,11 +68,33 @@ public class TRS {
         return permutations;
     }
 
+    public static void printAllRecursive(
+            int n, ArrayList<String> elements, ArrayList<ArrayList<String>> permutations) {
+
+        if(n == 1) {
+            permutations.add(new ArrayList<>(elements));
+        } else {
+            for(int i = 0; i < n-1; i++) {
+                printAllRecursive(n - 1, elements, permutations);
+                if(n % 2 == 0) {
+                    swap(elements, i, n-1);
+                } else {
+                    swap(elements, 0, n-1);
+                }
+            }
+            printAllRecursive(n - 1, elements, permutations);
+        }
+    }
+
     //расставляем знаки для [f1, f2, f3] как f1 < f2 < f3
     public ArrayList<ArrayList<String>> getFunctionsNamesPermutations() {
         ArrayList<String> functions = getAllFunctionsNames();
+        ArrayList<ArrayList<String>> permutations = new ArrayList<>();
 
-        return generatePermutations(functions);
+        printAllRecursive(functions.size(), functions, permutations);
+        return permutations;
+
+        //return generatePermutations(functions);
     }
 
     public ArrayList<Rule> getRules() {
