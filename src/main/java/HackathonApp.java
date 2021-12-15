@@ -33,6 +33,7 @@ public class HackathonApp {
     }
 
     public static void writeResult(String result) {
+        System.out.println(result);
         try(FileWriter writer = new FileWriter(RESULT_FILE_NAME, false))
         {
             writer.write(result);
