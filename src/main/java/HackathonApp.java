@@ -10,6 +10,11 @@ public class HackathonApp {
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
             trs.showTRS();
+            boolean isTerminating = LPO.checkTerminating(trs);
+            if (isTerminating)
+                System.out.println("true");
+            else
+                System.out.println("unknown");
 
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
