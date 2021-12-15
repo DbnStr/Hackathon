@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TRS {
     private ArrayList<Term> variables;
@@ -23,11 +24,12 @@ public class TRS {
     }
 
     public ArrayList<String> getAllFunctionsNames() {
-        Set<String> result = new HashSet<>();
-        for (Term variable : variables) {
-            result.add(variable.getTermName());
+        Set<Term> result = new HashSet<>();
+        for (Rule rule: rules) {
+            result.addAll(rule.getAllTerms());
         }
-        return new ArrayList<>(result);
+
+        return result.stream().map(Term::getTermName).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<String> getAllVariablesNames() {
@@ -38,36 +40,34 @@ public class TRS {
         return new ArrayList<>(result);
     }
 
-    private void swap(int i, int j) {
-        String tmp = variables.get(i).getTermName();
-        variables.get(i).setTermName(variables.get(j).getTermName());
-        variables.get(j).setTermName(tmp);
+    private void swap(ArrayList<String> arr, int i, int j) {
+        Collections.swap(arr, i, j);
     }
 
-    private ArrayList<String> nextPermutation() {
-        int n = variables.size();
-        ArrayList<String> permutation = new ArrayList<>();
-        for (Term variable : variables) {
-            permutation.add(variable.getTermName());
-        }
+    //возвращаем следующую переставку(алгос из инета)
+    private ArrayList<String> nextPermutation(ArrayList<String> functions) {
+        int n = functions.size();
+        ArrayList<String> permutation = new ArrayList<>(functions);
         int j = n - 2;
         while (j != -1 && permutation.get(j).compareTo(permutation.get(j + 1)) != -1) j--;
         if (j == -1)
             return null;
         int k = n - 1;
         while (permutation.get(j).compareTo(permutation.get(k)) != -1) k--;
-        swap(k, j);
+        swap(functions, k, j);
         int l = j + 1, r = n - 1;
-        while (l < r) swap(l++, r++);
+        while (l < r) swap(functions, l++, r--);
         return permutation;
     }
 
+    //расставляем знаки для [f1, f2, f3] как f1 < f2 < f3
     public ArrayList<ArrayList<String>> getFunctionsNamesPermutations() {
         ArrayList<ArrayList<String>> permutations = new ArrayList<>();
-        ArrayList<String> permutation = nextPermutation();
+        ArrayList<String> functions = getAllFunctionsNames();
+        ArrayList<String> permutation = nextPermutation(functions);
         while (permutation != null) {
             permutations.add(permutation);
-            permutation = nextPermutation();
+            permutation = nextPermutation(functions);
         }
         return permutations;
     }

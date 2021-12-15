@@ -20,6 +20,20 @@ public class Term {
         return result;
     }
 
+    public boolean equals(Term term) {
+        if (termName != term.getTermName() || termType != term.getTermType() || arguments.size() != term.getArguments().size()) {
+            return false;
+        }
+        for (int i = 0; i < arguments.size(); i++) {
+            Term arg = arguments.get(i);
+            Term a = term.getArguments().get(i);
+            if (!arg.equals(arguments.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public String getTermName() {
         return termName;
     }
@@ -43,6 +57,7 @@ public class Term {
     public void setArguments(ArrayList<Term> arguments) {
         this.arguments = arguments;
     }
+
 
     enum TermType {
         VARIABLE,
