@@ -24,7 +24,10 @@ public class Term {
         if (term.getTermType() != TermType.FUNCTION && getTermType() != TermType.FUNCTION) {
             if (termType == TermType.VARIABLE && term.getTermType() == TermType.VARIABLE)
                 return termName.equals(term.getTermName());
-            return true;
+            if (termType == TermType.CONSTANT && term.termType == TermType.CONSTANT)
+                return true;
+            //return true;
+            return false;
         } else {
             if (arguments.size() != term.getArguments().size() || !termName.equals(term.getTermName()))
                 return false;
