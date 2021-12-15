@@ -19,7 +19,7 @@ public class HackathonApp {
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
             checkTerms(trs);
-            boolean isTerminating = LPO.checkTerminating(trs);
+            //boolean isTerminating = LPO.checkTerminating(trs);
             boolean isLoop = false;
             try {
                 isLoop = Loop.isLoop(trs);
@@ -29,14 +29,14 @@ public class HackathonApp {
             if (isLoop) {
                 System.out.println("FALSE");
                 writeResult(FALSE_MESSAGE);
-            } else {
-                if (isTerminating) {
-                    System.out.println("TRUE");
-                    writeResult(TRUE_MESSAGE);
+//            } else {
+//                if (isTerminating) {
+//                    System.out.println("TRUE");
+//                    writeResult(TRUE_MESSAGE);
                 } else {
                     writeResult(UNKNOWN_MESSAGE);
                 }
-            }
+            //}
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
             writeResult(SYNTAX_ERROR_MESSAGE);
