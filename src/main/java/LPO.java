@@ -67,8 +67,11 @@ public class LPO {
         (u1, . . . , un) - правых агрументов (т.е. первый её не совпадающий с ui
         элемент ti удовлетворяет условию ti >lo ui).*/
         int j = 0;
-        while (leftTerm.getArguments().get(j).equals(rightTerm.getArguments().get(j)) && j < leftTerm.getArguments().size()) {
+        while (j < leftTerm.getArguments().size() && leftTerm.getArguments().get(j).equals(rightTerm.getArguments().get(j))) {
             j++;
+        }
+        if (j == leftTerm.getArguments().size()) {
+            return null;
         }
         assumptions = leftMoreThanRight(leftTerm.getArguments().get(j), rightTerm.getArguments().get(j), assumptions);
 
