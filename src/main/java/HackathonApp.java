@@ -2,6 +2,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import static java.lang.System.exit;
+
 public class HackathonApp {
 
     private static final String TEST_FILE_NAME = "test.trs";
@@ -11,7 +13,14 @@ public class HackathonApp {
     private static final String TRUE_MESSAGE = "true";
 
     public static void main(String[] args) throws SyntaxError {
-        ArrayList<String> in = new ArrayList<>(Arrays.asList(args));
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                exit(0);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 100, 1000);
         try {
             ArrayList<String> input = FileReaderHelper.readFile(TEST_FILE_NAME);
             input = FileReaderHelper.deleteAllSpaces(input);
@@ -27,13 +36,11 @@ public class HackathonApp {
                 writeResult(UNKNOWN_MESSAGE);
             }
         } catch (SyntaxError e) {
-            System.out.println(e.getMessage());
             writeResult(SYNTAX_ERROR_MESSAGE);
         }
     }
 
     public static void writeResult(String result) {
-        System.out.println(result);
         try(FileWriter writer = new FileWriter(RESULT_FILE_NAME, false))
         {
             writer.write(result);
