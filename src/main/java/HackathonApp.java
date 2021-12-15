@@ -22,9 +22,10 @@ public class HackathonApp {
 //            }
             boolean isTerminating = LPO.checkTerminating(trs);
             boolean isLoop = Loop.isLoop(trs);
-            if (isTerminating)
-                System.out.println("True");
-            else if (isLoop)
+//            if (isTerminating)
+//                System.out.println("True");
+//            else if (isLoop)
+            if (isLoop)
                 System.out.println("False");
             else
                 System.out.println("unknown");

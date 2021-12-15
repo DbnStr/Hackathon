@@ -142,6 +142,5 @@ public class Unifier {
         if (Term.isVariable(term)) {
             System.out.print(term.getTermName());
         }
-
     }
 }

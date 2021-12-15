@@ -8,7 +8,7 @@ public class Loop {
         ArrayList<Rule> allRules = trs.getRules();
         for (Rule r : allRules) {
             String rulePair = r.getLefTerm()+"-"+r.getRightTerm();
-            if (checked.contains(rulePair)) {
+            if (!checked.contains(rulePair)) {
                 if (isUnified(r, trs))
                     return true;
             }
@@ -27,7 +27,7 @@ public class Loop {
             if (unSubst == null) {
                 res = true;
                 String rulePair = r.getLefTerm()+"-"+r.getRightTerm();
-                if (checked.contains(rulePair)) {
+                if (!checked.contains(rulePair)) {
                     if (!isUnified(rl, trs))
                         return false;
                 }

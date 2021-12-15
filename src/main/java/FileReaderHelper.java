@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class FileReaderHelper {
     public static ArrayList<String> readFile(String fileName) {
         try {
-            File file = new File("input.txt");
+            File file = new File(fileName);
             //создаем объект FileReader для объекта File
             FileReader reader = new FileReader(file);
 
