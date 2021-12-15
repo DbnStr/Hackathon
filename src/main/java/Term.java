@@ -63,6 +63,17 @@ public class Term {
         this.arguments = arguments;
     }
 
+    public static boolean isVariable(Term t) {
+        return t.getTermType() == TermType.VARIABLE;
+    }
+
+    public static boolean isConstructor(Term t) {
+        return t.getTermType() == TermType.FUNCTION;
+    }
+
+    public static boolean isConstant(Term t) {
+        return t.getTermType() == TermType.CONSTANT;
+    }
 
     enum TermType {
         VARIABLE,
