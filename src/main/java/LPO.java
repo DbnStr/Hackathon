@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class LPO {
     public static boolean checkTerminating(TRS trs) {
@@ -27,8 +28,7 @@ public class LPO {
     }
 
     public static ArrayList<ArrayList<String>> checkSecond(Term leftTerm, Term rightTerm, ArrayList<ArrayList<String>> assumptions) {
-        ArrayList<ArrayList<String>> newAssumptions = new ArrayList<>();
-        newAssumptions.addAll(assumptions);
+        ArrayList<ArrayList<String>> newAssumptions = new ArrayList<>(assumptions);
         for (Term arg : leftTerm.getArguments()) {
             newAssumptions = leftMoreThanRight(arg, rightTerm, newAssumptions);
             if (newAssumptions != null)
@@ -93,7 +93,7 @@ public class LPO {
             return null;
         }
 
-        if (leftTerm.getTermName() == rightTerm.getTermName() && leftTerm.getArguments().size() == rightTerm.getArguments().size()) {
+        if (Objects.equals(leftTerm.getTermName(), rightTerm.getTermName()) && leftTerm.getArguments().size() == rightTerm.getArguments().size()) {
             assumptions = checkForth(leftTerm, rightTerm, assumptions);
         } else
             assumptions = checkThird(leftTerm, rightTerm, assumptions);
