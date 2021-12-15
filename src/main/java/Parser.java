@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    private static final String VARIABLE_REGEX = "\\[[[a-zA-Z],]*[a-zA-Z]\\]";
+    private static final String VARIABLE_REGEX = "\\[[[a-zA-Z],]*[a-zA-Z]\\]|\\[\\]";
     private static final String RULE_SEPARATOR = "->";
     private static final String TERM_NAME_REGEX = "[a-zA-Z]+";
     private static final int RULE_SEPARATOR_LENGTH = 2;

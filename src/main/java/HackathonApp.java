@@ -26,6 +26,7 @@ public class HackathonApp {
                 writeResult(UNKNOWN_MESSAGE);
             }
         } catch (SyntaxError e) {
+            System.out.println(e.getMessage());
             writeResult(SYNTAX_ERROR_MESSAGE);
         }
     }
