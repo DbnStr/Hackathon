@@ -40,10 +40,8 @@ public class TRS {
         return new ArrayList<>(result);
     }
 
-    private void swap(int i, int j) {
-        String tmp = variables.get(i).getTermName();
-        variables.get(i).setTermName(variables.get(j).getTermName());
-        variables.get(j).setTermName(tmp);
+    private void swap(ArrayList<String> arr, int i, int j) {
+        Collections.swap(arr, i, j);
     }
 
     //возвращаем следующую переставку(алгос из инета)
@@ -56,9 +54,9 @@ public class TRS {
             return null;
         int k = n - 1;
         while (permutation.get(j).compareTo(permutation.get(k)) != -1) k--;
-        swap(k, j);
+        swap(functions, k, j);
         int l = j + 1, r = n - 1;
-        while (l < r) swap(l++, r++);
+        while (l < r) swap(functions, l++, r--);
         return permutation;
     }
 
