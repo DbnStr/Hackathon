@@ -4,10 +4,6 @@ import java.util.Objects;
 public class LPO {
     public static boolean checkTerminating(TRS trs) {
         ArrayList<ArrayList<String>> assumptions = trs.getFunctionsNamesPermutations();
-        Rule firstRule = trs.getRules().get(0);
-        if (firstRule.getLefTerm().getTermType() != Term.TermType.FUNCTION) {
-            return false;
-        }
         for (Rule rule : trs.getRules()) {
             Term rightTerm = rule.getRightTerm();
             Term leftTerm = rule.getLefTerm();
@@ -28,8 +24,8 @@ public class LPO {
     }
 
     public static ArrayList<ArrayList<String>> checkSecond(Term leftTerm, Term rightTerm, ArrayList<ArrayList<String>> assumptions) {
-        ArrayList<ArrayList<String>> newAssumptions = new ArrayList<>(assumptions);
         for (Term arg : leftTerm.getArguments()) {
+            ArrayList<ArrayList<String>> newAssumptions = new ArrayList<>(assumptions);
             newAssumptions = leftMoreThanRight(arg, rightTerm, newAssumptions);
             if (newAssumptions != null)
                 return newAssumptions;
