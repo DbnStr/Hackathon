@@ -8,7 +8,8 @@ public class HackathonApp {
     private static final String RESULT_FILE_NAME = "result";
     private static final String SYNTAX_ERROR_MESSAGE = "Syntax error";
     private static final String UNKNOWN_MESSAGE = "Unknown";
-    private static final String TRUE_MESSAGE = "true";
+    private static final String TRUE_MESSAGE = "True";
+    private static final String FALSE_MESSAGE = "False";
 
     public static void main(String[] args) throws SyntaxError {
         ArrayList<String> in = new ArrayList<>(Arrays.asList(args));
@@ -17,14 +18,24 @@ public class HackathonApp {
             input = FileReaderHelper.deleteAllSpaces(input);
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
-//            trs.showTRS();
             checkTerms(trs);
             boolean isTerminating = LPO.checkTerminating(trs);
-
-            if (isTerminating) {
-                writeResult(TRUE_MESSAGE);
-            } else {
+            boolean isLoop = false;
+            try {
+                isLoop = Loop.isLoop(trs);
+            } catch (StackOverflowError e) {
                 writeResult(UNKNOWN_MESSAGE);
+            }
+            if (isLoop) {
+                System.out.println("FALSE");
+                writeResult(FALSE_MESSAGE);
+            } else {
+                if (isTerminating) {
+                    System.out.println("TRUE");
+                    writeResult(TRUE_MESSAGE);
+                } else {
+                    writeResult(UNKNOWN_MESSAGE);
+                }
             }
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
