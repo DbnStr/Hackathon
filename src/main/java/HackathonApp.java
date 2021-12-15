@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -9,6 +13,7 @@ public class HackathonApp {
     private static final String SYNTAX_ERROR_MESSAGE = "Syntax error";
     private static final String UNKNOWN_MESSAGE = "Unknown";
     private static final String TRUE_MESSAGE = "true";
+    private static final String FALSE_MESSAGE = "false";
 
     public static void main(String[] args) throws SyntaxError {
         ArrayList<String> in = new ArrayList<>(Arrays.asList(args));
@@ -17,14 +22,17 @@ public class HackathonApp {
             input = FileReaderHelper.deleteAllSpaces(input);
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
-//            trs.showTRS();
-            checkTerms(trs);
+//            checkTerms(trs);
+            boolean isLoop = Loop.isLoop(trs);
             boolean isTerminating = LPO.checkTerminating(trs);
-
-            if (isTerminating) {
-                writeResult(TRUE_MESSAGE);
+            if (isLoop) {
+                writeResult(FALSE_MESSAGE);
             } else {
-                writeResult(UNKNOWN_MESSAGE);
+                if (isTerminating) {
+                    writeResult(TRUE_MESSAGE);
+                } else {
+                    writeResult(UNKNOWN_MESSAGE);
+                }
             }
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
