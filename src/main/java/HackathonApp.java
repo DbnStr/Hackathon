@@ -22,18 +22,17 @@ public class HackathonApp {
             input = FileReaderHelper.deleteAllSpaces(input);
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
-            trs.showTRS();
 //            checkTerms(trs);
-            boolean isTerminating = LPO.checkTerminating(trs);
             boolean isLoop = Loop.isLoop(trs);
-            if (isTerminating) {
-                writeResult(TRUE_MESSAGE);
-            }
-            else if (isLoop) {
+            boolean isTerminating = LPO.checkTerminating(trs);
+            if (isLoop) {
                 writeResult(FALSE_MESSAGE);
-            }
-            else {
-                writeResult(UNKNOWN_MESSAGE);
+            } else {
+                if (isTerminating) {
+                    writeResult(TRUE_MESSAGE);
+                } else {
+                    writeResult(UNKNOWN_MESSAGE);
+                }
             }
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
