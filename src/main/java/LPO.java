@@ -60,19 +60,21 @@ public class LPO {
     }
 
     public static ArrayList<ArrayList<String>> checkForth(Term leftTerm, Term rightTerm, ArrayList<ArrayList<String>> assumptions) {
-        /*int j = 0;
-
-        assumptions = leftMoreThanRight(leftTerm.getArguments().get(j), rightTerm.getArguments().get(j), assumptions);
-        while (assumptions != null && j < leftTerm.getArguments().size() &&) {
-            j++;
-            assumptions = leftMoreThanRight(leftTerm.getArguments().get(j), rightTerm.getArguments().get(j), assumptions);
-        }*/
-
         for (Term arg : rightTerm.getArguments()) {
             assumptions = leftMoreThanRight(leftTerm, arg, assumptions);
             if (assumptions == null)
                 return null;
         }
+
+        /*n-ка (t1, . . . , tn) левых аргументов лексикографически больше, чем
+        (u1, . . . , un) - правых агрументов (т.е. первый её не совпадающий с ui
+        элемент ti удовлетворяет условию ti >lo ui).*/
+        int j = 0;
+        while (leftTerm.getArguments().get(j).equals(rightTerm.getArguments().get(j)) && j < leftTerm.getArguments().size()) {
+            j++;
+        }
+        assumptions = leftMoreThanRight(leftTerm.getArguments().get(j), rightTerm.getArguments().get(j), assumptions);
+
         return assumptions;
     }
 
