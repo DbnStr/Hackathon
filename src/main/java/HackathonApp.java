@@ -3,42 +3,42 @@ import java.io.IOException;
 import java.util.*;
 
 public class HackathonApp {
+
+    private static final String TEST_FILE_NAME = "test.trs";
+    private static final String RESULT_FILE_NAME = "result";
+    private static final String SYNTAX_ERROR_MESSAGE = "Syntax error";
+    private static final String UNKNOWN_MESSAGE = "Unknown";
+    private static final String TRUE_MESSAGE = "true";
+
     public static void main(String[] args) throws SyntaxError {
         ArrayList<String> in = new ArrayList<>(Arrays.asList(args));
         try {
-            ArrayList<String> input = FileReaderHelper.readFile("test.trs");
+            ArrayList<String> input = FileReaderHelper.readFile(TEST_FILE_NAME);
             input = FileReaderHelper.deleteAllSpaces(input);
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
-            trs.showTRS();
+            checkTerms(trs);
             boolean isTerminating = LPO.checkTerminating(trs);
-            if (isTerminating)
-                System.out.println("true");
-            else
-                System.out.println("unknown");
 
-            try(FileWriter writer = new FileWriter("result", false))
-            {
-                String text = "Unknown";
-                writer.write(text);
-
-                writer.flush();
-            }
-            catch(IOException ex){
-                System.out.println(ex.getMessage());
+            if (isTerminating) {
+                writeResult(TRUE_MESSAGE);
+            } else {
+                writeResult(UNKNOWN_MESSAGE);
             }
         } catch (SyntaxError e) {
-            System.out.println(e.getMessage());
-            try(FileWriter writer = new FileWriter("result", false))
-            {
-                String text = "Syntax error";
-                writer.write(text);
+            writeResult(SYNTAX_ERROR_MESSAGE);
+        }
+    }
 
-                writer.flush();
-            }
-            catch(IOException ex){
-                System.out.println(ex.getMessage());
-            }
+    public static void writeResult(String result) {
+        try(FileWriter writer = new FileWriter(RESULT_FILE_NAME, false))
+        {
+            writer.write(result);
+
+            writer.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
         }
     }
 
