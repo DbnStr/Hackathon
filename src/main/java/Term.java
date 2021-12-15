@@ -10,6 +10,18 @@ public class Term {
         this.termType = termType;
     }
 
+    public static boolean isVariable(Term x) {
+        return x.termType == Term.TermType.VARIABLE;
+    }
+
+    public static boolean isConstructor(Term x) {
+        return x.termType == TermType.FUNCTION;
+    }
+
+    public static boolean isConstant(Term x) {
+        return x.termType == TermType.CONSTANT;
+    }
+
     public String getTermName() {
         return termName;
     }

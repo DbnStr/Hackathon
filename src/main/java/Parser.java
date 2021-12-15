@@ -63,8 +63,8 @@ public class Parser {
 
         Term resultTerm = new Term(termName, Term.TermType.FUNCTION);
         ArrayList<Term> terms = new ArrayList<>();
-
         if (!isCloseBracket(constructor.charAt(constructor.length() - 1))) {
+            System.out.println(constructor.charAt(constructor.length()-1));
             throw new SyntaxError("NO CLOSE BRACKET IN TERM CONSTRUCTOR");
         }
         //delete open bracket
