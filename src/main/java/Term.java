@@ -21,17 +21,22 @@ public class Term {
     }
 
     public boolean equals(Term term) {
-        if (termName != term.getTermName() || termType != term.getTermType() || arguments.size() != term.getArguments().size()) {
-            return false;
-        }
-        for (int i = 0; i < arguments.size(); i++) {
-            Term arg = arguments.get(i);
-            Term a = term.getArguments().get(i);
-            if (!arg.equals(arguments.get(i))) {
+        if (term.getTermType() != TermType.FUNCTION && getTermType() != TermType.FUNCTION) {
+            if (termType == TermType.VARIABLE && term.getTermType() == TermType.VARIABLE)
+                return termName.equals(term.getTermName());
+            return true;
+        } else {
+            if (arguments.size() != term.getArguments().size())
                 return false;
+            for (int i = 0; i < arguments.size(); i++) {
+                Term arg = arguments.get(i);
+                Term a = term.getArguments().get(i);
+                if (!arg.equals(arguments.get(i))) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
     }
 
     public String getTermName() {
