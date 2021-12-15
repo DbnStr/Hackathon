@@ -8,6 +8,16 @@ public class Term {
     public Term(String termName, TermType termType) {
         this.termName = termName;
         this.termType = termType;
+        this.arguments = new ArrayList<>();
+    }
+
+    public ArrayList<Term> getAllChildTerms() {
+        ArrayList<Term> result = new ArrayList<>();
+        for(Term arg : arguments) {
+            result.add(arg);
+            result.addAll(arg.getAllChildTerms());
+        }
+        return result;
     }
 
     public String getTermName() {
