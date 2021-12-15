@@ -44,7 +44,6 @@ public class LPO {
                         return null;
                     }
                 }
-                return assumptions;
             } else
                 deletedAssumptions.add(assumption);
 
