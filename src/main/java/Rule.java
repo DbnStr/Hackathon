@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Rule {
     private Term leftTerm;
     private Term rightTerm;
@@ -11,6 +13,15 @@ public class Rule {
         leftTerm.showTerm();
         System.out.print(" --> ");
         rightTerm.showTerm();
+    }
+
+    public ArrayList<Term> getAllTerms() {
+        ArrayList<Term> result = new ArrayList<>();
+        result.add(leftTerm);
+        result.add(rightTerm);
+        result.addAll(leftTerm.getAllChildTerms());
+        result.addAll(rightTerm.getAllChildTerms());
+        return result;
     }
 
     public Term getLefTerm() {

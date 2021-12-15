@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class TRS {
     private ArrayList<Term> variables;
@@ -25,6 +23,14 @@ public class TRS {
     }
 
     public ArrayList<String> getAllFunctionsNames() {
+        Set<String> result = new HashSet<>();
+        for (Term variable : variables) {
+            result.add(variable.getTermName());
+        }
+        return new ArrayList<>(result);
+    }
+
+    public ArrayList<String> getAllVariablesNames() {
         Set<String> result = new HashSet<>();
         for (Term variable : variables) {
             result.add(variable.getTermName());
@@ -73,5 +79,21 @@ public class TRS {
 
     public ArrayList<Term> getVariables() {
         return variables;
+    }
+
+    public Map<String, TreeSet<Integer>> getAllTerms() {
+        ArrayList<Term> result = new ArrayList<>();
+        for (Rule rule: rules) {
+            result.addAll(rule.getAllTerms());
+        }
+        Map<String, TreeSet<Integer>> res = new HashMap<>();
+        for (Term term : result) {
+            if (!res.containsKey(term.getTermName())) {
+                res.put(term.getTermName(), new TreeSet<>());
+            }
+            Set<Integer> curSet = res.get(term.getTermName());
+            curSet.add(term.getArguments().size());
+        }
+        return res;
     }
 }

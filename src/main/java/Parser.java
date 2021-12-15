@@ -71,6 +71,7 @@ public class Parser {
         constructor = constructor.substring(1);
         //delete close bracket
         constructor = constructor.substring(0, constructor.length() - 1);
+
         int commaStartIndex = constructor.indexOf(COMMA);
         if (commaStartIndex == -1) {
             terms.add(parseTerm(constructor));
