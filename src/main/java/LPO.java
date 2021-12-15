@@ -4,6 +4,7 @@ import java.util.Objects;
 public class LPO {
     public static boolean checkTerminating(TRS trs) {
         ArrayList<ArrayList<String>> assumptions = trs.getFunctionsNamesPermutations();
+        //System.out.println(assumptions.toString());
         for (Rule rule : trs.getRules()) {
             Term rightTerm = rule.getRightTerm();
             Term leftTerm = rule.getLefTerm();
