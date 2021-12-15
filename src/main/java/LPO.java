@@ -97,7 +97,7 @@ public class LPO {
         } else
             assumptions = checkThird(leftTerm, rightTerm, assumptions);
 
-        if (assumptions.isEmpty())
+        if (assumptions != null && assumptions.isEmpty())
             return null;
         return assumptions;
     }
