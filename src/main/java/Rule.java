@@ -2,6 +2,11 @@ public class Rule {
     private Term lefTerm;
     private Term rightTerm;
 
+    public Rule(Term lefTerm, Term rightTerm) {
+        this.lefTerm = lefTerm;
+        this.rightTerm = rightTerm;
+    }
+
     public Term getLefTerm() {
         return lefTerm;
     }
