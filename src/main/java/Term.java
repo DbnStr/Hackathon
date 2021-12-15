@@ -34,6 +34,19 @@ public class Term {
         this.arguments = arguments;
     }
 
+    public boolean equals(Term term) {
+        if (termName != term.getTermName() || termType != term.getTermType() || arguments.size() != term.getArguments().size()) {
+            return false;
+        }
+        for (int i = 0; i < arguments.size(); i++) {
+            Term arg = arguments.get(i);
+            if (!arg.equals(term.getArguments().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     enum TermType {
         VARIABLE,
         CONSTANT,

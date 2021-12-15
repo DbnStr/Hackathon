@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TRS {
     private ArrayList<Term> variables;
@@ -54,6 +56,7 @@ public class TRS {
         return permutation;
     }
 
+    //расставляем знаки для [f1, f2, f3] как f1 < f2 < f3
     public ArrayList<ArrayList<String>> getFunctionsNamesPermutations() {
         ArrayList<ArrayList<String>> permutations = new ArrayList<>();
         ArrayList<String> permutation = nextPermutation();
