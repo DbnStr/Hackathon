@@ -13,6 +13,7 @@ public class HackathonApp {
     private static final String SYNTAX_ERROR_MESSAGE = "Syntax error";
     private static final String UNKNOWN_MESSAGE = "Unknown";
     private static final String TRUE_MESSAGE = "true";
+    private static final String FALSE_MESSAGE = "false";
 
     public static void main(String[] args) throws SyntaxError {
         ArrayList<String> in = new ArrayList<>(Arrays.asList(args));
@@ -21,13 +22,17 @@ public class HackathonApp {
             input = FileReaderHelper.deleteAllSpaces(input);
             Parser parser = new Parser(input);
             TRS trs = parser.parse();
-//            trs.showTRS();
-            checkTerms(trs);
+            trs.showTRS();
+//            checkTerms(trs);
             boolean isTerminating = LPO.checkTerminating(trs);
-
+            boolean isLoop = Loop.isLoop(trs);
             if (isTerminating) {
                 writeResult(TRUE_MESSAGE);
-            } else {
+            }
+            else if (isLoop) {
+                writeResult(FALSE_MESSAGE);
+            }
+            else {
                 writeResult(UNKNOWN_MESSAGE);
             }
         } catch (SyntaxError e) {
