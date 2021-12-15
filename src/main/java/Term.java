@@ -26,7 +26,7 @@ public class Term {
                 return termName.equals(term.getTermName());
             return true;
         } else {
-            if (arguments.size() != term.getArguments().size())
+            if (arguments.size() != term.getArguments().size() || !termName.equals(term.getTermName()))
                 return false;
             for (int i = 0; i < arguments.size(); i++) {
                 Term arg = arguments.get(i);
