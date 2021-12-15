@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    private static final String VARIABLE_REGEX = "\\[[[a-zA-Z],]*[a-zA-Z]\\]";
+    private static final String VARIABLE_REGEX = "\\[[[a-zA-Z],]*[a-zA-Z]\\]|\\[\\]";
     private static final String RULE_SEPARATOR = "->";
     private static final String TERM_NAME_REGEX = "[a-zA-Z]+";
     private static final int RULE_SEPARATOR_LENGTH = 2;
@@ -71,22 +71,43 @@ public class Parser {
         constructor = constructor.substring(1);
         //delete close bracket
         constructor = constructor.substring(0, constructor.length() - 1);
-        int commaStartIndex = constructor.indexOf(COMMA);
-        if (commaStartIndex == -1) {
-            terms.add(parseTerm(constructor));
-        } else {
-            while (commaStartIndex != -1) {
-                terms.add(parseTerm(constructor.substring(0, commaStartIndex)));
-                constructor = constructor.substring(commaStartIndex + 1);
-                commaStartIndex = constructor.indexOf(COMMA);
+        int i = 0;
+        int commaSumator = 0;
+
+        while (!constructor.isEmpty()) {
+            if (i == constructor.length()) {
+                if (commaSumator != 0) {
+                    throw new SyntaxError("UNCORRECTED COUNT OF BRACKET");
+                }
+                terms.add(parseTerm(constructor.substring(0, i)));
+                break;
             }
-            terms.add(parseTerm(constructor));
+            if (isCloseBracket(constructor.charAt(i))) {
+                --commaSumator;
+            }
+            if (isOpenBracket(constructor.charAt(i))) {
+                ++commaSumator;
+            }
+            if (isComma(constructor.charAt(i)) && commaSumator == 0) {
+                terms.add(parseTerm(constructor.substring(0, i)));
+                constructor = constructor.substring(i + 1);
+                i = 0;
+            }
+            i++;
         }
         resultTerm.setArguments(terms);
         return resultTerm;
     }
 
-    protected boolean isCloseBracket(Character c) {
+    protected boolean isComma(Character c) {
+        return Character.toString(c).equals(COMMA);
+    }
+
+    private boolean isOpenBracket(Character c) {
+        return Character.toString(c).equals(OPEN_BRACKET);
+    }
+
+    private boolean isCloseBracket(Character c) {
         return Character.toString(c).equals(CLOSE_BRACKET);
     }
 

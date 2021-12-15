@@ -8,6 +8,35 @@ public class Term {
     public Term(String termName, TermType termType) {
         this.termName = termName;
         this.termType = termType;
+        this.arguments = new ArrayList<>();
+    }
+
+    public ArrayList<Term> getAllChildTerms() {
+        ArrayList<Term> result = new ArrayList<>();
+        for(Term arg : arguments) {
+            result.add(arg);
+            result.addAll(arg.getAllChildTerms());
+        }
+        return result;
+    }
+
+    public boolean equals(Term term) {
+        if (term.getTermType() != TermType.FUNCTION && getTermType() != TermType.FUNCTION) {
+            if (termType == TermType.VARIABLE && term.getTermType() == TermType.VARIABLE)
+                return termName.equals(term.getTermName());
+            return true;
+        } else {
+            if (arguments.size() != term.getArguments().size())
+                return false;
+            for (int i = 0; i < arguments.size(); i++) {
+                Term arg = arguments.get(i);
+                Term a = term.getArguments().get(i);
+                if (!arg.equals(arguments.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     public static boolean isVariable(Term x) {
@@ -46,18 +75,6 @@ public class Term {
         this.arguments = arguments;
     }
 
-    public boolean equals(Term term) {
-        if (termName != term.getTermName() || termType != term.getTermType() || arguments.size() != term.getArguments().size()) {
-            return false;
-        }
-        for (int i = 0; i < arguments.size(); i++) {
-            Term arg = arguments.get(i);
-            if (!arg.equals(term.getArguments().get(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     enum TermType {
         VARIABLE,

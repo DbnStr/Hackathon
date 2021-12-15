@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class TRS {
     private ArrayList<Term> variables;
@@ -25,6 +23,21 @@ public class TRS {
     }
 
     public ArrayList<String> getAllFunctionsNames() {
+        ArrayList<Term> result = new ArrayList<>();
+        for (Rule rule: rules) {
+            result.addAll(rule.getAllTerms());
+        }
+
+        Set<String> names = new HashSet<>();
+        for (Term term: result) {
+            if (term.getTermType() == Term.TermType.FUNCTION)
+                names.add(term.getTermName());
+        }
+
+        return new ArrayList<>(names);
+    }
+
+    public ArrayList<String> getAllVariablesNames() {
         Set<String> result = new HashSet<>();
         for (Term variable : variables) {
             result.add(variable.getTermName());
@@ -32,39 +45,34 @@ public class TRS {
         return new ArrayList<>(result);
     }
 
-    private void swap(int i, int j) {
-        String tmp = variables.get(i).getTermName();
-        variables.get(i).setTermName(variables.get(j).getTermName());
-        variables.get(j).setTermName(tmp);
+    private static void swap(ArrayList<String> arr, int i, int j) {
+        Collections.swap(arr, i, j);
     }
 
-    private ArrayList<String> nextPermutation() {
-        int n = variables.size();
-        ArrayList<String> permutation = new ArrayList<>();
-        for (Term variable : variables) {
-            permutation.add(variable.getTermName());
+    private static void permutationsInternal(ArrayList<String> arr,ArrayList<ArrayList<String>> permutations, int index){
+        if(index >= arr.size() - 1){
+            permutations.add(new ArrayList<>(arr));
+            return;
         }
-        int j = n - 2;
-        while (j != -1 && permutation.get(j).compareTo(permutation.get(j + 1)) != -1) j--;
-        if (j == -1)
-            return null;
-        int k = n - 1;
-        while (permutation.get(j).compareTo(permutation.get(k)) != -1) k--;
-        swap(k, j);
-        int l = j + 1, r = n - 1;
-        while (l < r) swap(l++, r++);
-        return permutation;
+
+        for(int i = index; i < arr.size(); i++){
+            swap(arr, i, index);
+            permutationsInternal(arr, permutations, index + 1);
+            swap(arr, i, index);
+        }
+    }
+
+    public ArrayList<ArrayList<String>> generatePermutations(ArrayList<String> sequence) {
+        ArrayList<ArrayList<String>> permutations = new ArrayList<>();
+        permutationsInternal(sequence, permutations, 0);
+        return permutations;
     }
 
     //расставляем знаки для [f1, f2, f3] как f1 < f2 < f3
     public ArrayList<ArrayList<String>> getFunctionsNamesPermutations() {
-        ArrayList<ArrayList<String>> permutations = new ArrayList<>();
-        ArrayList<String> permutation = nextPermutation();
-        while (permutation != null) {
-            permutations.add(permutation);
-            permutation = nextPermutation();
-        }
-        return permutations;
+        ArrayList<String> functions = getAllFunctionsNames();
+
+        return generatePermutations(functions);
     }
 
     public ArrayList<Rule> getRules() {
@@ -73,5 +81,21 @@ public class TRS {
 
     public ArrayList<Term> getVariables() {
         return variables;
+    }
+
+    public Map<String, TreeSet<Integer>> getAllTerms() {
+        ArrayList<Term> result = new ArrayList<>();
+        for (Rule rule: rules) {
+            result.addAll(rule.getAllTerms());
+        }
+        Map<String, TreeSet<Integer>> res = new HashMap<>();
+        for (Term term : result) {
+            if (!res.containsKey(term.getTermName())) {
+                res.put(term.getTermName(), new TreeSet<>());
+            }
+            Set<Integer> curSet = res.get(term.getTermName());
+            curSet.add(term.getArguments().size());
+        }
+        return res;
     }
 }
