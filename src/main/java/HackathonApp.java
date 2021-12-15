@@ -13,7 +13,7 @@ public class HackathonApp {
             trs.showTRS();
             boolean isTerminating = LPO.checkTerminating(trs);
             if (isTerminating)
-                System.out.println("true");
+                System.out.println("True");
             else
                 System.out.println("unknown");
 
