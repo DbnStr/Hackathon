@@ -1,14 +1,20 @@
 public class Rule {
-    private Term lefTerm;
+    private Term leftTerm;
     private Term rightTerm;
 
     public Rule(Term lefTerm, Term rightTerm) {
-        this.lefTerm = lefTerm;
+        this.leftTerm = lefTerm;
         this.rightTerm = rightTerm;
     }
 
+    public void showRule() {
+        leftTerm.showTerm();
+        System.out.print(" --> ");
+        rightTerm.showTerm();
+    }
+
     public Term getLefTerm() {
-        return lefTerm;
+        return leftTerm;
     }
 
     public Term getRightTerm() {
@@ -16,7 +22,7 @@ public class Rule {
     }
 
     public void setLefTerm(Term lefTerm) {
-        this.lefTerm = lefTerm;
+        this.leftTerm = lefTerm;
     }
 
     public void setRightTerm(Term rightTerm) {

@@ -5,10 +5,6 @@ public class Term {
     private TermType termType;
     private ArrayList<Term> arguments;
 
-    public Term() {
-
-    }
-
     public Term(String termName, TermType termType) {
         this.termName = termName;
         this.termType = termType;
@@ -42,5 +38,14 @@ public class Term {
         VARIABLE,
         CONSTANT,
         FUNCTION
+    }
+
+    public void showTerm() {
+        System.out.print(termName + " " + termType + " ");
+        if (termType == TermType.FUNCTION) {
+            for (Term argument : arguments) {
+                argument.showTerm();
+            }
+        }
     }
 }

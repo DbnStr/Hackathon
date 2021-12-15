@@ -8,4 +8,17 @@ public class TRS {
         this.variables = variables;
         this.rules = rules;
     }
+
+    public void showTRS() {
+        System.out.println("Variables : ");
+        for (Term term : variables) {
+            System.out.println(term.getTermName() + "  " + term.getTermType() + ";");
+        }
+
+        System.out.println("Rules :");
+        for (Rule rule : rules) {
+            rule.showRule();
+            System.out.println();
+        }
+    }
 }
