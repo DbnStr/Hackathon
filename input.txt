@@ -1,3 +1,3 @@
 [x,y]
-g(y,z) -> f(z)
-f(x) -> g(h(z), z)
+f(x) -> f(r(x))
+r(x) -> x
