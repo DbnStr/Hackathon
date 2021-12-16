@@ -23,7 +23,7 @@ public class Term {
     public boolean equals(Term term) {
         if (term.getTermType() != TermType.FUNCTION && getTermType() != TermType.FUNCTION) {
             if (termType == TermType.VARIABLE && term.getTermType() == TermType.VARIABLE)
-                return termName.equals(term.getTermName());
+                return true;
             /*if (termType == TermType.CONSTANT && term.termType == TermType.CONSTANT)
                 return true;*/
             if (term.getTermType() == TermType.FUNCTION || termType == TermType.FUNCTION) {
