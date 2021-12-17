@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class LPO {
     public static boolean checkTerminating(TRS trs) {
@@ -25,13 +27,17 @@ public class LPO {
     }
 
     public static ArrayList<ArrayList<String>> checkSecond(Term leftTerm, Term rightTerm, ArrayList<ArrayList<String>> assumptions) {
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
         for (Term arg : leftTerm.getArguments()) {
             ArrayList<ArrayList<String>> newAssumptions = new ArrayList<>(assumptions);
             newAssumptions = leftMoreThanRight(arg, rightTerm, newAssumptions);
             if (newAssumptions != null)
-                return newAssumptions;
+                result.addAll(newAssumptions);
         }
-        return null;
+        if (result.isEmpty())
+            return null;
+        Set<ArrayList<String>> res = new HashSet<>(result);
+        return new ArrayList<>(res);
     }
 
     public static ArrayList<ArrayList<String>> checkThird(Term leftTerm, Term rightTerm, ArrayList<ArrayList<String>> assumptions) {
@@ -67,10 +73,17 @@ public class LPO {
         (u1, . . . , un) - правых агрументов (т.е. первый её не совпадающий с ui
         элемент ti удовлетворяет условию ti >lo ui).*/
         int j = 0;
-        while (j < leftTerm.getArguments().size() && leftTerm.getArguments().get(j).equals(rightTerm.getArguments().get(j))) {
+        int len = leftTerm.getArguments().size();
+        Term leftArgument = leftTerm.getArguments().get(j);
+        Term rightArgument = rightTerm.getArguments().get(j);
+        while (j < len && leftArgument.equals(rightArgument)) {
             j++;
+            if (j < len) {
+                leftArgument = leftTerm.getArguments().get(j);
+                rightArgument = rightTerm.getArguments().get(j);
+            }
         }
-        if (j == leftTerm.getArguments().size()) {
+        if (j == len) {
             return null;
         }
         assumptions = leftMoreThanRight(leftTerm.getArguments().get(j), rightTerm.getArguments().get(j), assumptions);
@@ -86,20 +99,33 @@ public class LPO {
             return assumptions;
 
         ArrayList<ArrayList<String>> newAssumptions = checkSecond(leftTerm, rightTerm, assumptions);
-        if (newAssumptions != null)
+        if (newAssumptions != null && newAssumptions.size() == assumptions.size())
             return newAssumptions;
 
         if (rightTerm.getTermType() != Term.TermType.FUNCTION) {
             return null;
         }
 
-        if (Objects.equals(leftTerm.getTermName(), rightTerm.getTermName()) && leftTerm.getArguments().size() == rightTerm.getArguments().size()) {
+        int leftSize = leftTerm.getArguments().size();
+        int rightSize = rightTerm.getArguments().size();
+        if (Objects.equals(leftTerm.getTermName(), rightTerm.getTermName()) && leftSize == rightSize) {
             assumptions = checkForth(leftTerm, rightTerm, assumptions);
         } else
             assumptions = checkThird(leftTerm, rightTerm, assumptions);
 
         if (assumptions != null && assumptions.isEmpty())
             return null;
+        if (assumptions == null && newAssumptions == null)
+            return null;
+
+        if (newAssumptions != null) {
+            if (assumptions != null) {
+                assumptions.addAll(newAssumptions);
+                Set<ArrayList<String>> res = new HashSet<>(assumptions);
+                return new ArrayList<>(res);
+            }
+            return newAssumptions;
+        }
         return assumptions;
     }
 }

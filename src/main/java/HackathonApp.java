@@ -13,14 +13,14 @@ public class HackathonApp {
     private static final String TRUE_MESSAGE = "true";
 
     public static void main(String[] args) throws SyntaxError {
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                exit(0);
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(timerTask, 3 * 60 * 1000, 1000);
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                exit(0);
+//            }
+//        };
+//        Timer timer = new Timer();
+//        timer.schedule(timerTask, 3 * 60 * 1000, 1000);
         try {
             ArrayList<String> input = FileReaderHelper.readFile(TEST_FILE_NAME);
             input = FileReaderHelper.deleteAllSpaces(input);
@@ -41,6 +41,7 @@ public class HackathonApp {
     }
 
     public static void writeResult(String result) {
+        System.out.println(result);
         try(FileWriter writer = new FileWriter(RESULT_FILE_NAME, false))
         {
             writer.write(result);
