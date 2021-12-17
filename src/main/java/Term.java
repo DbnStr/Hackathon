@@ -37,7 +37,7 @@ public class Term {
             for (int i = 0; i < arguments.size(); i++) {
                 Term arg = arguments.get(i);
                 Term a = term.getArguments().get(i);
-                if (!arg.equals(arguments.get(i))) {
+                if (!arg.equals(a)) {
                     return false;
                 }
             }
