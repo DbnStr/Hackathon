@@ -37,6 +37,21 @@ public class TRS {
         return new ArrayList<>(names);
     }
 
+    public ArrayList<String> getAllConstantsNames() {
+        ArrayList<Term> result = new ArrayList<>();
+        for (Rule rule: rules) {
+            result.addAll(rule.getAllTerms());
+        }
+
+        Set<String> names = new HashSet<>();
+        for (Term term: result) {
+            if (term.getTermType() == Term.TermType.CONSTANT)
+                names.add(term.getTermName());
+        }
+
+        return new ArrayList<>(names);
+    }
+
     public ArrayList<String> getAllVariablesNames() {
         Set<String> result = new HashSet<>();
         for (Term variable : variables) {
@@ -68,21 +83,21 @@ public class TRS {
         return permutations;
     }
 
-    public static void printAllRecursive(
+    public static void generateAll(
             int n, ArrayList<String> elements, ArrayList<ArrayList<String>> permutations) {
 
         if(n == 1) {
             permutations.add(new ArrayList<>(elements));
         } else {
             for(int i = 0; i < n-1; i++) {
-                printAllRecursive(n - 1, elements, permutations);
+                generateAll(n - 1, elements, permutations);
                 if(n % 2 == 0) {
                     swap(elements, i, n-1);
                 } else {
                     swap(elements, 0, n-1);
                 }
             }
-            printAllRecursive(n - 1, elements, permutations);
+            generateAll(n - 1, elements, permutations);
         }
     }
 
@@ -91,7 +106,19 @@ public class TRS {
         ArrayList<String> functions = getAllFunctionsNames();
         ArrayList<ArrayList<String>> permutations = new ArrayList<>();
 
-        printAllRecursive(functions.size(), functions, permutations);
+        generateAll(functions.size(), functions, permutations);
+        return permutations;
+
+        //return generatePermutations(functions);
+    }
+
+    public ArrayList<ArrayList<String>> getConstantsNamesPermutations() {
+        ArrayList<String> constants = getAllConstantsNames();
+        ArrayList<ArrayList<String>> permutations = new ArrayList<>();
+
+        if (constants.isEmpty())
+            return null;
+        generateAll(constants.size(), constants, permutations);
         return permutations;
 
         //return generatePermutations(functions);
