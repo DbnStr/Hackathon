@@ -24,8 +24,8 @@ public class Term {
         if (term.getTermType() != TermType.FUNCTION && getTermType() != TermType.FUNCTION) {
             if (termType == TermType.VARIABLE && term.getTermType() == TermType.VARIABLE)
                 return true;
-            /*if (termType == TermType.CONSTANT && term.termType == TermType.CONSTANT)
-                return true;*/
+            if (termType == TermType.CONSTANT && term.termType == TermType.CONSTANT)
+                return termName.equals(term.termName);
             if (term.getTermType() == TermType.FUNCTION || termType == TermType.FUNCTION) {
                 return false;
             }

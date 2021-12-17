@@ -1,3 +1,5 @@
 [x]
-f(a(f(x))) -> f(f(x))
-f(f(x)) -> a(x)
+f(g(x),x)->x
+g(x)->D(x)
+g(E)->f(D(E),H)
+f(x,D(x))-> H
